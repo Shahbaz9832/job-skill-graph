@@ -1,15 +1,227 @@
-Job Match Explorer
+# Job Match Explorer
 
-    A graph-database powered job matching app. Select or search your skills and discover which jobs        fit — and which single skill to learn next to unlock the most new matches.
+A graph-powered job matching application built with **CognoDB**.
 
-    🔗 Live demo: job-match-explorer.vercel.app (replace with your real Vercel URL)
-    🎥 Screen recording: Watch demo (replace with your recording link — Loom, YouTube unlisted, or a f    ile in the repo)
-    💻 Repository: github.com/your-username/job-skill-graph
+Users can enter or select their technical skills to discover matching jobs and identify additional skills that can unlock more opportunities.
 
-Overview
+## Demo
 
-Job Match Explorer models the relationship between skills, jobs, and companies as a graph rather than a set of relational tables. A user selects or types in their skills, and the app runs a multi-hop Cypher traversal — Skill ← REQUIRES ← Job ← POSTS ← Company — to rank every job by how well it matches, and separately surfaces which single new skill would unlock the greatest number of additional job matches.
+* **Live Demo:** `YOUR_DEPLOYED_URL`
+* **GitHub:** `YOUR_GITHUB_URL`
 
-That second query is deliberately the kind SQL handles awkwardly: it needs a negated existence check layered across two many-to-many relationships (jobs I don't yet qualify for, that still share at least one skill I already have). In Cypher it's a single pattern; in SQL it becomes nested correlated subqueries. That gap is the actual argument for why this use case benefits from a graph database, not just why it was modeled as one.
+---
 
-Stack: React (Vite) · Express · CognoDB (Neo4j-compatible graph DB, Bolt protocol) · deployed on Vercel + Render.
+## Why a Graph Database?
+
+Job matching is primarily about relationships:
+
+```text
+Skill → required by → Job → posted by → Company
+```
+
+A graph database makes it natural to traverse these relationships.
+
+For example, the application can find jobs matching a user's existing skills and identify additional skills that appear in related job requirements.
+
+This would require multiple joins across tables in a relational database, while graph traversal expresses these relationships directly.
+
+---
+
+## Graph Model
+
+```mermaid
+graph TD
+    Company -->|POSTS| Job
+    Job -->|REQUIRES| Skill
+```
+
+### Nodes
+
+* **Company:** name, industry
+* **Job:** title, location, seniority
+* **Skill:** name, normalized name, category, aliases
+
+### Relationships
+
+* `Company -[:POSTS]-> Job`
+* `Job -[:REQUIRES {mandatory}]-> Skill`
+
+The Skill model supports normalized names and aliases, so inputs such as `React`, `react`, and `reactjs` can refer to the same skill.
+
+---
+
+## Features
+
+* Search/select technical skills
+* Find matching jobs
+* Rank jobs by skill match
+* Show company, location and seniority
+* Recommend additional skills to learn
+* Loading, empty and error states
+* Case-insensitive and alias-aware skill matching
+
+---
+
+## Technology Stack
+
+**Frontend**
+
+* React
+* Vite
+* CSS
+
+**Backend**
+
+* Node.js
+* Express.js
+* Neo4j JavaScript Driver
+
+**Database**
+
+* CognoDB
+* openCypher
+* Bolt
+
+---
+
+## Project Structure
+
+```text
+job-skill-graph/
+├── backend/
+│   ├── server.js
+│   ├── seed.js
+│   ├── verify.js
+│   ├── test-connection.js
+│   └── .env
+│
+├── frontend/
+│   └── src/
+│       ├── App.jsx
+│       └── App.css
+│
+└── README.md
+```
+
+---
+
+## Setup
+
+### 1. Clone
+
+```bash
+git clone YOUR_GITHUB_URL
+cd job-skill-graph
+```
+
+### 2. Backend
+
+```bash
+cd backend
+npm install
+```
+
+Create `.env`:
+
+```env
+COGNODB_URI=bolt+s://YOUR_INSTANCE.databases.cognodb.cloud
+COGNODB_USER=cognodb
+COGNODB_PASSWORD=YOUR_PASSWORD
+PORT=4000
+```
+
+Seed the database:
+
+```bash
+node seed.js
+```
+
+Start the backend:
+
+```bash
+node server.js
+```
+
+### 3. Frontend
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+The application will normally be available at:
+
+```text
+http://localhost:5173
+```
+
+---
+
+## Main Graph Queries
+
+### Job Matching
+
+The application traverses the graph to compare user skills with job requirements and calculate a match score.
+
+```text
+User Skills
+     ↓
+   Skill
+     ↓
+   Job
+     ↓
+ Company
+```
+
+### Next Skill
+
+The application finds additional skills connected to relevant jobs and counts how many jobs each skill could unlock.
+
+```text
+Current Skill
+      ↓
+      Job
+      ↓
+Required Skill
+```
+
+All database queries use **parameterized Cypher** through the official Neo4j driver.
+
+---
+
+## Seed Data
+
+The included seed script creates:
+
+* **15 Skills**
+* **6 Companies**
+* **15 Jobs**
+* `POSTS` relationships
+* `REQUIRES` relationships
+
+Run:
+
+```bash
+node verify.js
+```
+
+to verify the graph.
+
+---
+
+## Security
+
+Database credentials are stored in environment variables and are excluded from Git using `.gitignore`.
+
+
+
+---
+
+## Author
+
+**Shahbaz Ansari**
+
+GitHub: `YOUR_GITHUB_PROFILE`
+
+LinkedIn: `YOUR_LINKEDIN_PROFILE`
