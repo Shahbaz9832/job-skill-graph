@@ -1,10 +1,10 @@
 Job Match Explorer
 
-A graph-database powered job matching app. Select or search your skills and discover which jobs fit — and which single skill to learn next to unlock the most new matches.
+    A graph-database powered job matching app. Select or search your skills and discover which jobs        fit — and which single skill to learn next to unlock the most new matches.
 
-🔗 Live demo: job-match-explorer.vercel.app (replace with your real Vercel URL)
-🎥 Screen recording: Watch demo (replace with your recording link — Loom, YouTube unlisted, or a file in the repo)
-💻 Repository: github.com/your-username/job-skill-graph
+    🔗 Live demo: job-match-explorer.vercel.app (replace with your real Vercel URL)
+    🎥 Screen recording: Watch demo (replace with your recording link — Loom, YouTube unlisted, or a f    ile in the repo)
+    💻 Repository: github.com/your-username/job-skill-graph
 
 Overview
 
