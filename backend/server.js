@@ -3,6 +3,7 @@ const cors = require('cors');
 const driver = require('./db');
 
 const app = express();
+
 app.use(cors({
   origin: [
     'https://job-skill-graph.vercel.app',
