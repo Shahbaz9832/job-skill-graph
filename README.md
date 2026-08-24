@@ -6,8 +6,7 @@ Users can enter or select their technical skills to discover matching jobs and i
 
 ## Demo
 
-* **Live Demo:** `YOUR_DEPLOYED_URL`
-* **GitHub:** `YOUR_GITHUB_URL`
+* **Live Demo:** https://job-skill-graph.vercel.app/
 
 ---
 
@@ -150,11 +149,6 @@ npm install
 npm run dev
 ```
 
-The application will normally be available at:
-
-```text
-http://localhost:5173
-```
 
 ---
 
@@ -222,6 +216,6 @@ Database credentials are stored in environment variables and are excluded from G
 
 **Shahbaz Ansari**
 
-GitHub: `YOUR_GITHUB_PROFILE`
+GitHub: https://github.com/Shahbaz9832
 
-LinkedIn: `YOUR_LINKEDIN_PROFILE`
+LinkedIn:https://www.linkedin.com/in/shahbaz-ansari-dev/
