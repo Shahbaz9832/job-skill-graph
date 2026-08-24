@@ -3,7 +3,15 @@ const cors = require('cors');
 const driver = require('./db');
 
 const app = express();
-app.use(cors());
+// app.use(cors());
+app.use(cors({
+  origin: [
+    'https://job-skill-graph.vercel.app',
+    'https://job-skill-graph-git-main-shahbaz9832s-projects.vercel.app'
+  ],
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type']
+}));
 app.use(express.json());
 
 // Helper: run a read query with graceful error handling
